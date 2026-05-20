@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Report</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="report-dashboard">
+
+    <!-- SIDEBAR -->
+
+    <div class="sidebar">
+
+        <h1 class="logo">AI Study</h1>
+
+        <ul>
+
+            <!-- HOME -->
+
+            <a href="/">
+
+                <li>
+                    🏠 Dashboard
+                </li>
+
+            </a>
+
+            <!-- AI CHAT -->
+
+            <a href="/dashboard">
+
+                <li>
+                    💬 AI Chat
+                </li>
+
+            </a>
+
+            <!-- REPORT -->
+
+            <a href="/report">
+
+                <li class="active">
+                    📊 Report
+                </li>
+
+            </a>
+
+            <!-- TEST -->
+
+            <a href="/test">
+
+                <li>
+                    📝 Tests
+                </li>
+
+            </a>
+
+        </ul>
+
+    </div>
+
+    <!-- MAIN -->
+
+    <div class="report-main">
+
+        <!-- HEADER -->
+
+        <div class="report-header glass">
+
+            <div>
+
+                <h1>📊 Performance Report</h1>
+
+                <p>
+                    Detailed AI analytics of your test
+                </p>
+
+            </div>
+
+            <div class="score-circle">
+
+                {{ percentage }}%
+
+            </div>
+
+        </div>
+
+        <!-- STATS -->
+
+        <div class="analytics-grid">
+
+            <div class="glass stat-card">
+
+                <h3>Correct</h3>
+
+                <h1>{{ score }}</h1>
+
+            </div>
+
+            <div class="glass stat-card">
+
+                <h3>Wrong</h3>
+
+                <h1>{{ total - score }}</h1>
+
+            </div>
+
+            <div class="glass stat-card">
+
+                <h3>Weak Topics</h3>
+
+                <h1>{{ weak_topics|length }}</h1>
+
+            </div>
+
+        </div>
+
+        <!-- PIE CHART -->
+
+        <div class="glass chart-card">
+
+            <h2>📈 Analytics</h2>
+
+           <div class="chart-wrapper">
+
+    <canvas id="reportChart"></canvas>
+
+</div>
+
+        </div>
+
+        <!-- CORRECT ANSWERS -->
+
+        <div class="glass answers-card">
+
+            <h2>✅ Correct Answers</h2>
+
+            <div class="answers-list">
+
+                {% for item in correct_answers %}
+
+                <div class="answer-item correct">
+
+                    <h3>{{ item.question }}</h3>
+
+                    <p>
+
+                        Your Answer:
+                        {{ item.user }}
+
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- WRONG ANSWERS -->
+
+        <div class="glass answers-card">
+
+            <h2>❌ Wrong Answers</h2>
+
+            <div class="answers-list">
+
+                {% for item in wrong_answers %}
+
+                <div class="answer-item wrong">
+
+                    <h3>{{ item.question }}</h3>
+
+                    <p>
+                        Your Answer:
+                        {{ item.user }}
+                    </p>
+
+                    <p>
+                        Correct Answer:
+                        {{ item.correct }}
+                    </p>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- WEAK TOPICS -->
+
+        <div class="glass weak-card">
+
+            <h2>⚠ Weak Topics</h2>
+
+            <ul>
+
+                {% for topic in weak_topics %}
+
+                <li>{{ topic }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+        </div>
+
+        <!-- AI FEEDBACK -->
+
+        <div class="glass feedback-card">
+
+            <h2>🤖 AI Recommendation</h2>
+
+            <p>
+
+                {% if percentage >= 80 %}
+
+                Excellent work.
+                Your understanding is strong.
+                Focus on revision and advanced problems.
+
+                {% elif percentage >= 50 %}
+
+                Good progress.
+                Practice weak concepts and revise important topics.
+
+                {% else %}
+
+                You need more conceptual clarity.
+                Revise fundamentals and solve more MCQs daily.
+
+                {% endif %}
+
+            </p>
+
+        </div>
+
+        <a href="/" class="submit-btn">
+
+            Back Home
+
+        </a>
+
+    </div>
+
+</div>
+
+<!-- CHART -->
+
+<script>
+
+const correct = Number("{{ score }}")
+
+const wrong = Number("{{ total - score }}")
+
+new Chart(document.getElementById("reportChart"), {
+
+    type: "pie",
+
+    data: {
+
+        labels: [
+            "Correct",
+            "Wrong"
+        ],
+
+        datasets: [{
+
+            data: [
+                correct,
+                wrong
+            ]
+
+        }]
+    }
+
+})
+
+</script>
+</body>
+
+</html>

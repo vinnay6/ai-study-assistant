@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI Study Assistant</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<!-- BACKGROUND BLURS -->
+
+<div class="bg-blur blur1"></div>
+<div class="bg-blur blur2"></div>
+
+<!-- MAIN HERO -->
+
+<div class="landing-page">
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🚀 AI Study
+        </div>
+
+        <div class="nav-links">
+
+            <a href="#">Features</a>
+
+            <a href="#">Analytics</a>
+
+            <a href="#">AI Tutor</a>
+
+            <button class="nav-btn">
+                Dashboard
+            </button>
+
+        </div>
+
+    </nav>
+
+    <!-- HERO -->
+
+    <div class="hero-section">
+
+        <!-- LEFT -->
+
+        <div class="hero-left">
+
+            <div class="badge">
+                ⚡ AI Powered Learning Platform
+            </div>
+
+            <h1>
+                Turn Your <span>PDF Notes</span>
+                Into Smart Learning
+            </h1>
+
+            <p>
+                Upload your study material and get AI summaries,
+                tests, analytics, reports, and live tutoring.
+            </p>
+
+            <form action="/upload"
+                  method="POST"
+                  enctype="multipart/form-data"
+                  class="upload-card">
+
+                <input type="file"
+                       name="pdf"
+                       required>
+
+                <button type="submit">
+                    Upload & Analyze
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="hero-right">
+
+            <div class="floating-card glass">
+
+                <h3>📄 Smart Summary</h3>
+
+                <p>
+                    AI generates concise notes instantly.
+                </p>
+
+            </div>
+
+            <div class="floating-card glass delay">
+
+                <h3>🧠 AI Tests</h3>
+
+                <p>
+                    Generate quizzes and track performance.
+                </p>
+
+            </div>
+
+            <div class="floating-card glass">
+
+                <h3>📊 Analytics</h3>
+
+                <p>
+                    Visualize your study progress beautifully.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
