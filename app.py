@@ -248,10 +248,10 @@ def test():
 
     global generated_mcqs
 
+    print(generated_mcqs)
+
     return render_template(
-
         "test.html",
-
         mcqs=generated_mcqs
     )
 
