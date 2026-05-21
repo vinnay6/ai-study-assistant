@@ -1,108 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>AI Test</title>
 
+    <!-- GOOGLE FONT -->
+
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <!-- EXTERNAL CSS -->
+
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-    <div class="container">
+    <!-- TEST PAGE -->
 
-        <!-- TOP BAR -->
+    <div class="test-page">
 
-        <div class="top-bar">
+        <div class="test-card">
 
-            <h1 class="title">
+            <!-- TOP BAR -->
 
-                📝 AI Generated Test
+            <div class="top-bar">
 
-            </h1>
+                <h1 class="title">
 
-            <a href="/dashboard" class="back-btn">
+                    📝 AI Generated Test
 
-                ← Back to Dashboard
+                </h1>
 
-            </a>
+                <a href="/dashboard"
+                   class="back-btn">
 
-        </div>
+                    ← Back to Dashboard
 
-        <!-- TEST FORM -->
-
-        <form action="/submit-test" method="POST">
-
-            {% for mcq in mcqs %}
-
-            {% set question_number = loop.index %}
-
-            <div class="question-box">
-
-                <h2 class="question">
-
-                    Q{{ question_number }}.
-                    {{ mcq.question }}
-
-                </h2>
-
-                {% for option in mcq.options %}
-
-                <label class="option">
-
-                    <input
-
-                        type="radio"
-
-                        name="q{{ question_number }}"
-
-                        value="{{ loop.index }}"
-
-                        required
-                    >
-
-                    <span class="option-text">
-
-                        {{ option }}
-
-                    </span>
-
-                </label>
-
-                {% endfor %}
+                </a>
 
             </div>
 
-            {% endfor %}
+            <!-- TEST FORM -->
 
-            <!-- SUBMIT -->
+            <form action="/submit-test"
+                  method="POST"
+                  class="test-form">
 
-            <button
-                type="submit"
-                class="submit-btn"
-            >
+                {% for mcq in mcqs %}
 
-                🚀 Submit Test
+                {% set question_number = loop.index %}
 
-            </button>
+                <!-- QUESTION CARD -->
 
-        </form>
+                <div class="question-box glass">
+
+                    <h2 class="question">
+
+                        Q{{ question_number }}.
+                        {{ mcq.question }}
+
+                    </h2>
+
+                    <!-- OPTIONS -->
+
+                    <div class="options-list">
+
+                        {% for option in mcq.options %}
+
+                        <label class="option">
+
+                            <input
+                                type="radio"
+                                name="q{{ question_number }}"
+                                value="{{ loop.index }}"
+                                required>
+
+                            <span class="option-text">
+
+                                {{ option }}
+
+                            </span>
+
+                        </label>
+
+                        {% endfor %}
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+                <!-- SUBMIT BUTTON -->
+
+                <button
+                    type="submit"
+                    class="submit-btn">
+
+                    🚀 Submit Test
+
+                </button>
+
+            </form>
+
+        </div>
 
     </div>
 
 </body>
+
 </html>

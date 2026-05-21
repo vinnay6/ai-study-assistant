@@ -13,6 +13,10 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -23,59 +27,45 @@
 
     <!-- SIDEBAR -->
 
-    <div class="sidebar">
+    <aside class="sidebar">
 
-        <h1 class="logo">AI Study</h1>
+        <h1 class="logo">
+            🚀 AI Study
+        </h1>
 
         <ul>
 
-            <!-- HOME -->
-
             <a href="/">
-
                 <li>
                     🏠 Dashboard
                 </li>
-
             </a>
 
-            <!-- AI CHAT -->
-
             <a href="/dashboard">
-
                 <li>
                     💬 AI Chat
                 </li>
-
             </a>
 
-            <!-- REPORT -->
-
             <a href="/report">
-
                 <li class="active">
                     📊 Report
                 </li>
-
             </a>
 
-            <!-- TEST -->
-
             <a href="/test">
-
                 <li>
                     📝 Tests
                 </li>
-
             </a>
 
         </ul>
 
-    </div>
+    </aside>
 
-    <!-- MAIN -->
+    <!-- MAIN CONTENT -->
 
-    <div class="report-main">
+    <main class="report-main">
 
         <!-- HEADER -->
 
@@ -83,10 +73,12 @@
 
             <div>
 
-                <h1>📊 Performance Report</h1>
+                <h1>
+                    📊 Performance Report
+                </h1>
 
                 <p>
-                    Detailed AI analytics of your test
+                    Detailed AI analytics of your performance
                 </p>
 
             </div>
@@ -105,7 +97,7 @@
 
             <div class="glass stat-card">
 
-                <h3>Correct</h3>
+                <h3>✅ Correct</h3>
 
                 <h1>{{ score }}</h1>
 
@@ -113,7 +105,7 @@
 
             <div class="glass stat-card">
 
-                <h3>Wrong</h3>
+                <h3>❌ Wrong</h3>
 
                 <h1>{{ total - score }}</h1>
 
@@ -121,7 +113,7 @@
 
             <div class="glass stat-card">
 
-                <h3>Weak Topics</h3>
+                <h3>⚠ Weak Topics</h3>
 
                 <h1>{{ weak_topics|length }}</h1>
 
@@ -129,17 +121,19 @@
 
         </div>
 
-        <!-- PIE CHART -->
+        <!-- CHART -->
 
         <div class="glass chart-card">
 
-            <h2>📈 Analytics</h2>
+            <h2>
+                📈 Test Analytics
+            </h2>
 
-           <div class="chart-wrapper">
+            <div class="chart-wrapper">
 
-    <canvas id="reportChart"></canvas>
+                <canvas id="reportChart"></canvas>
 
-</div>
+            </div>
 
         </div>
 
@@ -147,7 +141,9 @@
 
         <div class="glass answers-card">
 
-            <h2>✅ Correct Answers</h2>
+            <h2>
+                ✅ Correct Answers
+            </h2>
 
             <div class="answers-list">
 
@@ -155,13 +151,13 @@
 
                 <div class="answer-item correct">
 
-                    <h3>{{ item.question }}</h3>
+                    <h3>
+                        {{ item.question }}
+                    </h3>
 
                     <p>
-
                         Your Answer:
                         {{ item.user }}
-
                     </p>
 
                 </div>
@@ -176,7 +172,9 @@
 
         <div class="glass answers-card">
 
-            <h2>❌ Wrong Answers</h2>
+            <h2>
+                ❌ Wrong Answers
+            </h2>
 
             <div class="answers-list">
 
@@ -184,7 +182,9 @@
 
                 <div class="answer-item wrong">
 
-                    <h3>{{ item.question }}</h3>
+                    <h3>
+                        {{ item.question }}
+                    </h3>
 
                     <p>
                         Your Answer:
@@ -208,13 +208,17 @@
 
         <div class="glass weak-card">
 
-            <h2>⚠ Weak Topics</h2>
+            <h2>
+                ⚠ Weak Topics
+            </h2>
 
             <ul>
 
                 {% for topic in weak_topics %}
 
-                <li>{{ topic }}</li>
+                <li>
+                    {{ topic }}
+                </li>
 
                 {% endfor %}
 
@@ -226,7 +230,9 @@
 
         <div class="glass feedback-card">
 
-            <h2>🤖 AI Recommendation</h2>
+            <h2>
+                🤖 AI Recommendation
+            </h2>
 
             <p>
 
@@ -234,17 +240,17 @@
 
                 Excellent work.
                 Your understanding is strong.
-                Focus on revision and advanced problems.
+                Focus on advanced problem solving and revision.
 
                 {% elif percentage >= 50 %}
 
                 Good progress.
-                Practice weak concepts and revise important topics.
+                Revise weak concepts and practice more MCQs.
 
                 {% else %}
 
-                You need more conceptual clarity.
-                Revise fundamentals and solve more MCQs daily.
+                You need stronger conceptual clarity.
+                Focus on fundamentals and daily revision.
 
                 {% endif %}
 
@@ -252,13 +258,25 @@
 
         </div>
 
-        <a href="/" class="submit-btn">
+        <!-- BUTTONS -->
 
-            Back Home
+        <div class="action-buttons">
 
-        </a>
+            <a href="/" class="submit-btn">
 
-    </div>
+                🏠 Back Home
+
+            </a>
+
+            <a href="/test" class="submit-btn">
+
+                🚀 Retake Test
+
+            </a>
+
+        </div>
+
+    </main>
 
 </div>
 
@@ -289,11 +307,20 @@ new Chart(document.getElementById("reportChart"), {
             ]
 
         }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false
+
     }
 
 })
 
 </script>
+
 </body>
 
 </html>

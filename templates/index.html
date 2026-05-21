@@ -13,16 +13,20 @@
     <link rel="stylesheet"
           href="{{ url_for('static', filename='style.css') }}">
 
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
 </head>
 
 <body>
 
-<!-- BACKGROUND BLURS -->
+<!-- BACKGROUND -->
 
 <div class="bg-blur blur1"></div>
 <div class="bg-blur blur2"></div>
 
-<!-- MAIN HERO -->
+<!-- MAIN CONTAINER -->
 
 <div class="landing-page">
 
@@ -50,11 +54,11 @@
 
     </nav>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
 
-    <div class="hero-section">
+    <section class="hero-section">
 
-        <!-- LEFT -->
+        <!-- LEFT SIDE -->
 
         <div class="hero-left">
 
@@ -63,33 +67,42 @@
             </div>
 
             <h1>
-                Turn Your <span>PDF Notes</span>
+                Turn Your
+                <span>PDF Notes</span>
                 Into Smart Learning
             </h1>
 
             <p>
                 Upload your study material and get AI summaries,
-                tests, analytics, reports, and live tutoring.
+                MCQ tests, analytics reports and live AI tutoring
+                in seconds.
             </p>
+
+            <!-- UPLOAD FORM -->
 
             <form action="/upload"
                   method="POST"
                   enctype="multipart/form-data"
                   class="upload-card">
 
+                <label class="file-label">
+                    Choose PDF File
+                </label>
+
                 <input type="file"
                        name="pdf"
+                       accept=".pdf"
                        required>
 
                 <button type="submit">
-                    Upload & Analyze
+                    🚀 Upload & Analyze
                 </button>
 
             </form>
 
         </div>
 
-        <!-- RIGHT -->
+        <!-- RIGHT SIDE -->
 
         <div class="hero-right">
 
@@ -98,34 +111,37 @@
                 <h3>📄 Smart Summary</h3>
 
                 <p>
-                    AI generates concise notes instantly.
+                    AI creates clean and concise notes
+                    instantly from your PDFs.
                 </p>
 
             </div>
 
             <div class="floating-card glass delay">
 
-                <h3>🧠 AI Tests</h3>
+                <h3>🧠 AI Generated Tests</h3>
 
                 <p>
-                    Generate quizzes and track performance.
+                    Practice with automatically generated
+                    MCQs and improve your preparation.
                 </p>
 
             </div>
 
             <div class="floating-card glass">
 
-                <h3>📊 Analytics</h3>
+                <h3>📊 Analytics Dashboard</h3>
 
                 <p>
-                    Visualize your study progress beautifully.
+                    Track your progress with detailed
+                    performance reports and charts.
                 </p>
 
             </div>
 
         </div>
 
-    </div>
+    </section>
 
 </div>
 

@@ -1,203 +1,198 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>AI Study Assistant</title>
 
+    <!-- GOOGLE FONT -->
+
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet"
-    >
+        rel="stylesheet">
 
     <!-- EXTERNAL CSS -->
+
     <link
         rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}"
-    >
+        href="{{ url_for('static', filename='style.css') }}">
 
 </head>
 
 <body>
 
-    <!-- ========================= -->
-    <!-- SUMMARY -->
-    <!-- ========================= -->
+    <!-- MAIN CONTAINER -->
 
-    <div class="summary-section">
+    <div class="dashboard-container">
 
-        <div class="summary-box">
+        <!-- SUMMARY SECTION -->
 
-            <div class="top-bar">
+        <section class="summary-section">
 
-                <h1 class="title">
-                    📄 AI Summary
-                </h1>
+            <div class="summary-box">
 
-                <div class="tag">
-                    AI Powered
+                <!-- TOP BAR -->
+
+                <div class="top-bar">
+
+                    <h1 class="title">
+                        📄 AI Summary
+                    </h1>
+
+                    <div class="tag">
+                        AI Powered
+                    </div>
+
+                </div>
+
+                <!-- SUMMARY CONTENT -->
+
+                <div class="summary-content">
+
+                    {{ ai_result }}
+
+                </div>
+
+                <!-- BUTTONS -->
+
+                <div class="button-row">
+
+                    <a href="/test">
+
+                        <button class="btn primary">
+
+                            🚀 Start Test
+
+                        </button>
+
+                    </a>
+
+                    <a href="/">
+
+                        <button class="btn secondary">
+
+                            📂 Upload Another PDF
+
+                        </button>
+
+                    </a>
+
                 </div>
 
             </div>
 
-            <div class="summary-content">
+        </section>
 
-                {{ ai_result }}
+        <!-- CHAT SECTION -->
 
-            </div>
+        <aside class="chat-section">
 
-            <div class="button-row">
+            <!-- CHAT HEADER -->
 
-                <a href="/test">
+            <div class="chat-header">
 
-                    <button class="btn primary">
+                <div class="avatar">
+                    🤖
+                </div>
 
-                        🚀 Start Test
+                <div>
 
-                    </button>
+                    <h2>
+                        AI Tutor
+                    </h2>
 
-                </a>
+                    <p>
+                        Ask doubts from your PDF
+                    </p>
 
-                <a href="/">
-
-                    <button class="btn secondary">
-
-                        📂 Upload Another PDF
-
-                    </button>
-
-                </a>
+                </div>
 
             </div>
 
-        </div>
+            <!-- CHAT BOX -->
+
+            <div class="chat-box"
+                 id="chat-box">
+
+            </div>
+
+            <!-- INPUT AREA -->
+
+            <div class="input-area">
+
+                <input
+                    type="text"
+                    id="user-input"
+                    placeholder="Ask anything from PDF...">
+
+                <button
+                    class="send-btn"
+                    onclick="sendMessage()">
+
+                    Send
+
+                </button>
+
+            </div>
+
+        </aside>
 
     </div>
 
-    <!-- ========================= -->
-    <!-- CHATBOT -->
-    <!-- ========================= -->
-
-    <div class="chat-section">
-
-        <div class="chat-header">
-
-            <div class="avatar">
-                🤖
-            </div>
-
-            <h2>AI Tutor</h2>
-
-        </div>
-
-        <div class="chat-box" id="chat-box">
-
-        </div>
-
-        <div class="input-area">
-
-            <input
-                type="text"
-                id="user-input"
-                placeholder="Ask doubts from PDF..."
-            >
-
-            <button
-                class="send-btn"
-                onclick="sendMessage()"
-            >
-                Send
-            </button>
-
-        </div>
-
-    </div>
-
-    <!-- ========================= -->
-    <!-- JS -->
-    <!-- ========================= -->
+    <!-- JAVASCRIPT -->
 
     <script>
 
-    async function sendMessage(){
+        async function sendMessage(){
 
-        let input =
-        document.getElementById("user-input");
+            let input =
+            document.getElementById("user-input");
 
-        let message = input.value;
+            let message =
+            input.value.trim();
 
-        if(message.trim() === ""){
-            return;
-        }
+            if(message === ""){
+                return;
+            }
 
-        let chatBox =
-        document.getElementById("chat-box");
+            let chatBox =
+            document.getElementById("chat-box");
 
-        // USER MESSAGE
-
-        chatBox.innerHTML += `
-
-            <div class="message user">
-                ${message}
-            </div>
-
-        `;
-
-        input.value = "";
-
-        chatBox.scrollTop =
-        chatBox.scrollHeight;
-
-        // TYPING
-
-        let typingId =
-        "typing-" + Date.now();
-
-        chatBox.innerHTML += `
-
-            <div
-                class="message bot"
-                id="${typingId}"
-            >
-
-                Typing...
-
-            </div>
-
-        `;
-
-        chatBox.scrollTop =
-        chatBox.scrollHeight;
-
-        try{
-
-            let response = await fetch("/chat",{
-
-                method:"POST",
-
-                headers:{
-                    "Content-Type":"application/json"
-                },
-
-                body:JSON.stringify({
-                    message:message
-                })
-
-            });
-
-            let data = await response.json();
-
-            document
-            .getElementById(typingId)
-            .remove();
+            // USER MESSAGE
 
             chatBox.innerHTML += `
 
-                <div class="message bot">
-                    ${data.reply}
+                <div class="message user">
+
+                    ${message}
+
+                </div>
+
+            `;
+
+            input.value = "";
+
+            chatBox.scrollTop =
+            chatBox.scrollHeight;
+
+            // TYPING MESSAGE
+
+            let typingId =
+            "typing-" + Date.now();
+
+            chatBox.innerHTML += `
+
+                <div
+                    class="message bot"
+                    id="${typingId}">
+
+                    Typing...
+
                 </div>
 
             `;
@@ -205,37 +200,85 @@
             chatBox.scrollTop =
             chatBox.scrollHeight;
 
+            try{
+
+                let response =
+                await fetch("/chat",{
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+                        message:message
+                    })
+
+                });
+
+                let data =
+                await response.json();
+
+                // REMOVE TYPING
+
+                document
+                .getElementById(typingId)
+                .remove();
+
+                // BOT MESSAGE
+
+                chatBox.innerHTML += `
+
+                    <div class="message bot">
+
+                        ${data.reply}
+
+                    </div>
+
+                `;
+
+                chatBox.scrollTop =
+                chatBox.scrollHeight;
+
+            }
+
+            catch(error){
+
+                document
+                .getElementById(typingId)
+                .remove();
+
+                chatBox.innerHTML += `
+
+                    <div class="message bot">
+
+                        ⚠️ Error generating response
+
+                    </div>
+
+                `;
+
+            }
+
         }
 
-        catch(error){
+        // ENTER KEY SUPPORT
 
-            document
-            .getElementById(typingId)
-            .remove();
+        document
+        .getElementById("user-input")
+        .addEventListener("keypress", function(e){
 
-            chatBox.innerHTML += `
+            if(e.key === "Enter"){
 
-                <div class="message bot">
-                    ⚠️ Error generating response
-                </div>
+                sendMessage();
 
-            `;
-        }
-    }
+            }
 
-    // ENTER KEY SUPPORT
-
-    document
-    .getElementById("user-input")
-    .addEventListener("keypress", function(e){
-
-        if(e.key === "Enter"){
-
-            sendMessage();
-        }
-    });
+        });
 
     </script>
 
 </body>
+
 </html>
