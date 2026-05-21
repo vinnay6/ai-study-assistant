@@ -87,7 +87,7 @@ def generate_mcqs(text):
     global generated_mcqs
 
     prompt = f"""
-    Generate 10 REAL multiple choice questions
+    Generate 5 REAL multiple choice questions
     from the study material.
 
     Return ONLY valid JSON.
@@ -126,7 +126,7 @@ def generate_mcqs(text):
 
         response = client.chat.completions.create(
 
-            model="llama-3.1-8b-instant",
+            model="llama3-8b-8192",
 
             messages=[
                 {
@@ -218,7 +218,7 @@ def upload_file():
 
     # LIMIT TEXT
 
-    extracted_text = extracted_text[:2000]
+    extracted_text = extracted_text[:1000]
 
     pdf_context = extracted_text
 
