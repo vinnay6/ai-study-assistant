@@ -88,6 +88,8 @@ def generate_ai_output(text):
 
 def generate_mcqs(text):
 
+    global generated_mcqs
+
     prompt = f"""
     Generate 5 REAL multiple choice questions
     from the study material.
@@ -132,11 +134,9 @@ def generate_mcqs(text):
         response_text = response_text.replace("```json", "")
         response_text = response_text.replace("```", "")
 
-        mcqs = json.loads(response_text)
+        generated_mcqs = json.loads(response_text)
 
-        session["mcqs"] = generated_mcqs
-
-        return generate_mcqs
+        return generated_mcqs
 
     except Exception as e:
 
@@ -233,11 +233,11 @@ def upload_file():
 @app.route('/test')
 def test():
 
-    mcqs = session.get("mcqs", [])
+    global generated_mcqs
 
     return render_template(
         "test.html",
-        mcqs=mcqs
+        mcqs=generated_mcqs
     )
 
 # =========================
@@ -247,7 +247,7 @@ def test():
 @app.route('/submit-test', methods=['POST'])
 def submit_test():
 
-    mcqs = session.get("mcqs", [])
+    mcqs = generated_mcqs
 
     score = 0
 
