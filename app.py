@@ -3,6 +3,7 @@ import os
 import pdfplumber
 from groq import Groq
 import json
+from flask import session
 
 # =========================
 # GROQ API
@@ -18,6 +19,9 @@ client = Groq(
 # =========================
 
 app = Flask(__name__)
+app = Flask(__name__)
+
+app.secret_key = "vinay_secret"
 
 UPLOAD_FOLDER = "uploads"
 
@@ -152,7 +156,7 @@ def generate_mcqs(text):
 
         print("MCQ Error:", e)
 
-        generated_mcqs = []
+        session["mcqs"] = mcqs
 
         return []
 
@@ -246,13 +250,11 @@ def upload_file():
 @app.route('/test')
 def test():
 
-    global generated_mcqs
+    mcqs = session.get("mcqs", [])
 
     return render_template(
-
         "test.html",
-
-        mcqs=generated_mcqs
+        mcqs=mcqs
     )
 
 # =========================
@@ -274,7 +276,9 @@ def submit_test():
 
     wrong_answers = []
 
-    for i, mcq in enumerate(generated_mcqs):
+    mcqs = session.get("mcqs", [])
+
+    for i, mcq in enumerate(mcqs):
 
         user_answer = request.form.get(f"q{i+1}")
 
