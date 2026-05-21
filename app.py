@@ -117,7 +117,7 @@ def generate_mcqs(text):
 
         response = client.chat.completions.create(
 
-            model="llama-3.3-70b-versatile",
+            model="llama-3.1-8b-instant",
 
             messages=[
                 {
@@ -134,9 +134,9 @@ def generate_mcqs(text):
 
         mcqs = json.loads(response_text)
 
-        session["mcqs"] = mcqs
+        session["mcqs"] = generated_mcqs
 
-        return mcqs
+        return generate_mcqs
 
     except Exception as e:
 
