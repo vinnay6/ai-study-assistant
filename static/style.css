@@ -819,3 +819,41 @@ body{
         font-size:32px;
     }
 }
+
+@media(max-width:768px){
+
+    body{
+        padding:18px;
+        overflow-x:hidden;
+    }
+
+    .top-bar{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .title{
+        font-size:28px;
+    }
+
+    .question-box{
+        padding:20px;
+    }
+
+    .question{
+        font-size:18px;
+    }
+
+    .option{
+        padding:14px;
+    }
+
+    .submit-btn{
+        font-size:18px;
+        padding:16px;
+    }
+
+    .chat-section{
+        width:100%;
+    }
+}
