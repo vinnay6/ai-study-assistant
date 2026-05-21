@@ -18,7 +18,7 @@ client = Groq(
 # FLASK APP
 # =========================
 
-app = Flask(__name__)
+
 app = Flask(__name__)
 
 app.secret_key = "vinay_secret"
@@ -88,36 +88,23 @@ def generate_ai_output(text):
 
 def generate_mcqs(text):
 
-    global generated_mcqs
-
     prompt = f"""
     Generate 5 REAL multiple choice questions
     from the study material.
 
     Return ONLY valid JSON.
 
-    Rules:
-
-    - Each question must have 4 REAL options.
-    - Do NOT use placeholders like:
-      Option A, Option B etc.
-    - Questions should be meaningful.
-    - answer must be:
-      "1", "2", "3", or "4"
-
-    JSON Format:
+    Format:
 
     [
       {{
-        "question":"What is Laplace Transform?",
-
+        "question":"Question",
         "options":[
-          "A mathematical transform",
-          "A programming language",
-          "A database",
-          "A network protocol"
+          "Option1",
+          "Option2",
+          "Option3",
+          "Option4"
         ],
-
         "answer":"1"
       }}
     ]
@@ -130,7 +117,7 @@ def generate_mcqs(text):
 
         response = client.chat.completions.create(
 
-            model="llama3-8b-8192",
+            model="llama-3.3-70b-versatile",
 
             messages=[
                 {
@@ -138,28 +125,24 @@ def generate_mcqs(text):
                     "content":prompt
                 }
             ]
-
         )
 
         response_text = response.choices[0].message.content
 
-        # CLEAN JSON
-
         response_text = response_text.replace("```json", "")
         response_text = response_text.replace("```", "")
 
-        generated_mcqs = json.loads(response_text)
+        mcqs = json.loads(response_text)
 
-        return generated_mcqs
+        session["mcqs"] = mcqs
+
+        return mcqs
 
     except Exception as e:
 
         print("MCQ Error:", e)
 
-        session["mcqs"] = mcqs
-
         return []
-
 # =========================
 # HOME
 # =========================
@@ -264,19 +247,17 @@ def test():
 @app.route('/submit-test', methods=['POST'])
 def submit_test():
 
-    global generated_mcqs
+    mcqs = session.get("mcqs", [])
 
     score = 0
 
-    total = len(generated_mcqs)
+    total = len(mcqs)
 
     weak_topics = []
 
     correct_answers = []
 
     wrong_answers = []
-
-    mcqs = session.get("mcqs", [])
 
     for i, mcq in enumerate(mcqs):
 
@@ -295,15 +276,7 @@ def submit_test():
             "user": user_answer
         }
 
-        if (
-
-            str(user_answer).strip()
-
-            ==
-
-            str(correct_answer).strip()
-
-        ):
+        if str(user_answer).strip() == str(correct_answer).strip():
 
             score += 1
 
