@@ -1,4 +1,4 @@
-# AI Notes Summarizer 🚀
+# AI Notes Summarizer 
 
 AI Notes Summarizer is a smart study assistant designed to help students learn faster and revise efficiently using AI.  
 The platform can summarize long notes, generate viva questions, create MCQs, and provide AI-based study reports from uploaded PDF notes.
